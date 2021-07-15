@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import HeroListPage from "./pages/HeroListPage.jsx";
+import HeroProfilePage from "./pages/HeroProfilePage.jsx";
 
 const StyledContainer = styled.div`
     max-width: 1200px;
@@ -13,9 +14,8 @@ const App = () => {
             <StyledContainer>
                 <HeroListPage></HeroListPage>
                 <Switch>
-                    <Route path="/heros/:heroId">
-                        {/* <HeroProfilePage/> */}
-                        <div>HeroProfilePage</div>
+                    <Route path="/heroes/:heroId">
+                        <HeroProfilePage />
                     </Route>
                     <Route path="*">
                         {/* <HeroIndexPage /> */}
