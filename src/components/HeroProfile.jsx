@@ -1,11 +1,11 @@
 import { Alert, Button, Col, message, Row, Skeleton, Statistic } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import AbilityBar from "./AbilityBar.jsx";
 import { getHeroProfile, updateHeroProfile } from "../utils/api";
-import HeroIndex from "./HeroIndex.jsx";
+import HeroContext from "./context/HeroContext.jsx";
 
 const StyledSavedArea = styled.div`
   display: ${(props) => (props.xs ? "block" : "flex")};
@@ -14,20 +14,18 @@ const StyledSavedArea = styled.div`
   height: 100%;
   .rest {
     font-size: 1.2rem;
-
     margin-bottom: 10px;
     span {
       display: inline-block;
-
-      font-size: 1.5rem;
-      min-width: 100px;
+      font-size: 2rem;
+      min-width: 50px;
     }
   }
 `;
 
 const StyledButton = styled(Button)`
-  background: #fa8b00;
-  border: 1px solid #fa8b00;
+  background: #910505;
+  border: 2px solid #910505;
   color: white;
   border-radius: 5px;
   width: 100%;
@@ -35,19 +33,29 @@ const StyledButton = styled(Button)`
   height: auto;
   :hover,
   :focus {
-    border: 1px solid #fa8b00;
-    color: #fa8b00;
+    border: 2px solid #910505;
+    color: #910505;
   }
 `;
+const StyledProfile = styled.div`
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+`;
 
+const StyledError = styled.div`
+  text-align: center;
+  font-size: 2rem;
+`;
 const HeroProfile = () => {
   const { heroId } = useParams();
   const [abilities, setAbilities] = useState({});
   const [restPoints, setRestPoints] = useState(0);
   const [ui, setUi] = useState("Loading");
-  const { xs, sm, md, lg } = useBreakpoint();
+  const { setCurrentHeroId } = useContext(HeroContext);
   useEffect(() => {
     setUi("Loading");
+    setCurrentHeroId(heroId);
     getHeroProfile(heroId)
       .then((resp) => {
         setAbilities(resp);
@@ -66,6 +74,7 @@ const HeroProfile = () => {
       updateHeroProfile(heroId, abilities)
         .then((resp) => {
           console.log(resp);
+          if (resp === "OK") message.success("儲存成功！");
         })
         .catch((err) => {
           console.log("err", err);
@@ -94,10 +103,14 @@ const HeroProfile = () => {
   };
   switch (ui) {
     case "Loading":
-      return <Skeleton />;
+      return (
+        <StyledProfile>
+          <Skeleton />
+        </StyledProfile>
+      );
     case "OK":
       return (
-        <>
+        <StyledProfile>
           <Row>
             <Col xs={24} sm={12}>
               {Object.entries(abilities).map(([ability, points]) => {
@@ -113,7 +126,7 @@ const HeroProfile = () => {
               })}
             </Col>
             <Col xs={24} sm={12}>
-              <StyledSavedArea xs={xs}>
+              <StyledSavedArea>
                 <div>
                   <div className="rest">
                     剩餘點數：
@@ -126,21 +139,23 @@ const HeroProfile = () => {
               </StyledSavedArea>
             </Col>
           </Row>
-        </>
+        </StyledProfile>
       );
     case "Error":
       return (
-        <HeroIndex
-          render={
-            <>
-              Sorry! <br /> Could Not Find Hero Profile At Index {heroId}.
-            </>
-          }
-        />
+        <StyledProfile>
+          <StyledError>
+            Sorry! <br /> Could Not Find Hero Profile At Index {heroId}.
+          </StyledError>
+        </StyledProfile>
       );
 
     default:
-      return <Skeleton />;
+      return (
+        <StyledProfile>
+          <Skeleton />
+        </StyledProfile>
+      );
   }
 };
 
