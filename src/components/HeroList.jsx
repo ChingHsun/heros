@@ -1,16 +1,29 @@
-import { Col, Result, Row, Skeleton } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Result, Row, Skeleton, Spin } from "antd";
+import { useContext, useEffect, useState } from "react";
 import HeroCard from "./HeroCard.jsx";
 import { getHeroList } from "../utils/api";
-
+import { useParams } from "react-router";
+import HeroContext from "./context/HeroContext.jsx";
+import styled from "styled-components";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+const StyledHeroList = styled(Row)`
+  margin-bottom: 10%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0px !important;
+`;
 const HeroList = () => {
   const [heroList, setHeroList] = useState([]);
   const [ui, setUi] = useState("Loading");
+  const { currentHeroId } = useContext(HeroContext);
+  const md = useBreakpoint();
   useEffect(() => {
+    console.log("in", md);
     getHeroList()
       .then((resp) => {
-        setHeroList(resp);
         setUi("OK");
+        setHeroList(resp);
       })
       .catch((err) => {
         setUi("Error");
@@ -19,16 +32,27 @@ const HeroList = () => {
   }, []);
   switch (ui) {
     case "Loading":
-      return <Skeleton />;
+      return (
+        <StyledHeroList>
+          <Col span={24}>
+            <Spin />
+          </Col>
+        </StyledHeroList>
+      );
     case "OK":
       return (
-        <Row gutter={[16, 16]} style={{ marginBottom: "50px" }}>
+        <StyledHeroList gutter={[16, 16]} breakpoint={md ? "md" : null}>
           {heroList?.map((hero) => (
-            <Col xs={24} sm={12} md={6} key={hero.id}>
-              <HeroCard id={hero.id} name={hero.name} image={hero.image} />
+            <Col sm={12} md={6} key={hero.id}>
+              <HeroCard
+                id={hero.id}
+                name={hero.name}
+                image={hero.image}
+                selected={currentHeroId == hero.id ? "selected" : null}
+              />
             </Col>
           ))}
-        </Row>
+        </StyledHeroList>
       );
     case "Error":
       return (
@@ -39,7 +63,13 @@ const HeroList = () => {
         ></Result>
       );
     default:
-      return <Skeleton />;
+      return (
+        <StyledHeroList>
+          <Col span={24}>
+            <Spin />
+          </Col>
+        </StyledHeroList>
+      );
   }
 };
 
