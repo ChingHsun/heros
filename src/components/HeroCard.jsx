@@ -1,15 +1,10 @@
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Card, Image, Skeleton } from "antd";
-import Meta from "antd/lib/card/Meta";
-import loadingImage from "../imgs/loadingImage.png";
-import React, { memo, useContext, useEffect, useMemo } from "react";
-import HeroContext from "./context/HeroContext.jsx";
+import React, { memo } from "react";
 const StyledHeroCard = styled(Link)`
   display: block;
   width: 100%;
   max-width: 300px;
-
   margin: 0 auto;
   text-decoration: none;
   color: ${(props) => (props.selected ? "#ffffff" : "#000000")};
@@ -36,7 +31,6 @@ const StyledHeroCard = styled(Link)`
   }
   &:hover {
     color: white;
-
     .card {
       background: ${(props) =>
         props.selected ? "rgba(187, 5, 5, 0.5)" : "rgba(100, 100, 100, 0.5)"};
@@ -49,7 +43,6 @@ const StyledHeroCard = styled(Link)`
 `;
 
 const HeroCard = memo(({ id, name, image, selected }) => {
-  console.log("HeroCard");
   return (
     <StyledHeroCard to={`/heroes/${id}`} selected={selected}>
       <div className="card">

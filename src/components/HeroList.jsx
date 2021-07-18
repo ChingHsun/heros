@@ -1,11 +1,9 @@
-import { Col, Result, Row, Skeleton, Spin } from "antd";
+import { Col, Result, Row, Spin } from "antd";
 import { useContext, useEffect, useState } from "react";
 import HeroCard from "./HeroCard.jsx";
 import { getHeroList } from "../utils/api";
-import { useParams } from "react-router";
 import HeroContext from "./context/HeroContext.jsx";
 import styled from "styled-components";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 const StyledHeroList = styled(Row)`
   margin-bottom: 10%;
   width: 100%;
@@ -17,9 +15,7 @@ const HeroList = () => {
   const [heroList, setHeroList] = useState([]);
   const [ui, setUi] = useState("Loading");
   const { currentHeroId } = useContext(HeroContext);
-  const md = useBreakpoint();
   useEffect(() => {
-    console.log("in", md);
     getHeroList()
       .then((resp) => {
         setUi("OK");
@@ -41,7 +37,7 @@ const HeroList = () => {
       );
     case "OK":
       return (
-        <StyledHeroList gutter={[16, 16]} breakpoint={md ? "md" : null}>
+        <StyledHeroList gutter={[16, 16]}>
           {heroList?.map((hero) => (
             <Col sm={12} md={6} key={hero.id}>
               <HeroCard

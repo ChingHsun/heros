@@ -1,14 +1,13 @@
-import { Alert, Button, Col, message, Row, Skeleton, Statistic } from "antd";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { Button, Col, message, Row, Skeleton } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import AbilityBar from "./AbilityBar.jsx";
 import { getHeroProfile, updateHeroProfile } from "../utils/api";
 import HeroContext from "./context/HeroContext.jsx";
 
 const StyledSavedArea = styled.div`
-  display: ${(props) => (props.xs ? "block" : "flex")};
+  display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   height: 100%;
@@ -69,7 +68,6 @@ const HeroProfile = () => {
   }, [heroId]);
 
   const onSave = () => {
-    console.log("onSave");
     if (restPoints === 0) {
       updateHeroProfile(heroId, abilities)
         .then((resp) => {
@@ -78,6 +76,7 @@ const HeroProfile = () => {
         })
         .catch((err) => {
           console.log("err", err);
+          message.error("OOPS!某地方出錯了");
         });
     } else {
       message.error("剩餘點數必須為零");

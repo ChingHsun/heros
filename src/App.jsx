@@ -1,12 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  HashRouter,
-  Redirect,
-  Route,
-  Switch,
-  useParams,
-} from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import HeroContext from "./components/context/HeroContext.jsx";
 import HeroList from "./components/HeroList.jsx";
@@ -22,7 +15,6 @@ const StyledContainer = styled.div`
   background-image: url(${marvel});
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   .inner__container {
     width: 1200px;
     padding: 100px 30px 30px;
@@ -31,7 +23,6 @@ const StyledContainer = styled.div`
 
 const App = () => {
   const [currentHeroId, setCurrentHeroId] = useState(null);
-
   return (
     <HeroContext.Provider value={{ currentHeroId, setCurrentHeroId }}>
       <BrowserRouter>
@@ -42,7 +33,6 @@ const App = () => {
               <Route path="/heroes/:heroId">
                 <HeroProfile />
               </Route>
-
               <Route path="*">
                 <Redirect to="/heroes" />
               </Route>

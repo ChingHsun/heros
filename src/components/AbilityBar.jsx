@@ -9,17 +9,14 @@ const StyledBar = styled.div`
   align-items: center;
   margin-bottom: 16px;
   font-size: 1.5rem;
-
   .ability {
     min-width: 80px;
     text-align: center;
   }
-
   .points {
     min-width: 30px;
     text-align: center;
   }
-
   button {
     border: 2px solid #910505;
     background: #910505;
