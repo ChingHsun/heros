@@ -10,11 +10,6 @@ module.exports = {
     historyApiFallback:  true,
         hot: true
     },
-   optimization: {
-     splitChunks: {
-       chunks: 'all',
-     },
-   },
     module: {
         rules: [
             { 
