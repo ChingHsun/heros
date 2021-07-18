@@ -24,10 +24,22 @@ const StyledBar = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    :hover,
-    :focus {
+    transition: transform 250ms ease;
+    &:hover {
+      border: 2px solid #910505;
+      background: #910505;
+      color: white;
+      transform: scale(1.1);
+    }
+    &:focus {
       border: 2px solid #910505;
       color: #910505;
+    }
+    &:focus:hover {
+      border: 2px solid #910505;
+      color: #910505;
+      background: white;
+      transform: scale(1.1);
     }
   }
 `;

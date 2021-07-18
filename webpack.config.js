@@ -10,7 +10,11 @@ module.exports = {
     historyApiFallback:  true,
         hot: true
     },
- 
+   optimization: {
+     splitChunks: {
+       chunks: 'all',
+     },
+   },
     module: {
         rules: [
             { 
@@ -31,6 +35,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "/dist", "index.html"),
+            favicon: "./src/imgs/favicon.png",
+            inject: false 
         }),
     ],
 };
