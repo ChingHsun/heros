@@ -48,8 +48,8 @@ yarn start
 - Bundler: [Webpack](https://webpack.js.org/)
 - Compiler: [Babel](https://babeljs.io/)
 - Code Splitting: [React Loadable](https://github.com/jamiebuilds/react-loadable)
-- Unit Test: [Jest](), [moxios](), [testing-library]()
-- Coding Style： [Eslint]()
+- Unit Test: [Jest](https://jestjs.io/), [moxios](https://github.com/axios/moxios), [testing-library](https://testing-library.com/)
+- Coding Style： [Eslint](https://eslint.org/)
 
 ### Styled Components
 
@@ -171,12 +171,9 @@ yarn start
 - 個人理解＆感想：
   code splitting 是第一次實作。在之前讀書會有稍微提過 react.lazy，而在查資料的過程中得知 React.lazy 不能在 SSR 中使用，因此決定使用 loadable！
 
-  個人感覺的優點是：
+  因為只 splitting page 的載入所以大小可能沒有差太多，將 index.bundle.js 從 3.2MB 變成 2.5MB（listpage:15.3KB, profilepage:22.1KB)
 
-  - 覺得語法很方便
-  -  之前有實現 modal gallery，才發現 router 有很多玩法ＸＤ
-
-  個人感覺的缺點則是：目前感覺不到！！
+### Unit Test (Jest, moxios, testing-library)
 
 ## 你在程式碼中寫註解的原則，遇到什麼狀況會寫註解
 

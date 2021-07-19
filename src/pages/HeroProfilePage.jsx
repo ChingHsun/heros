@@ -1,8 +1,9 @@
 import { Button, Col, message, Row, Skeleton } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import AbilityBar from "../components/AbilityBar.jsx";
+import HeroContext from "../components/context/HeroContext.jsx";
 import { getHeroProfile, updateHeroProfile } from "../utils/api";
 
 const StyledSavedArea = styled.div`
@@ -50,18 +51,30 @@ const HeroProfilePage = () => {
   const [abilities, setAbilities] = useState({});
   const [restPoints, setRestPoints] = useState(0);
   const [ui, setUi] = useState("Loading");
+  const { heroesPreSave, setHeroPreSave } = useContext(HeroContext);
+
   useEffect(() => {
-    setUi("Loading");
-    getHeroProfile(heroId)
-      .then((resp) => {
-        setAbilities(resp);
-        setRestPoints(0);
-        setUi("OK");
-      })
-      .catch((err) => {
-        console.log("er", err);
-        setUi("Error");
-      });
+    if (heroesPreSave[heroId]) {
+      const { rest, ...ability } = heroesPreSave[heroId];
+      setRestPoints(rest);
+      setAbilities(ability);
+    } else {
+      setUi("Loading");
+      getHeroProfile(heroId)
+        .then((resp) => {
+          setHeroPreSave({
+            ...heroesPreSave,
+            [heroId]: { ...resp, rest: 0 },
+          });
+          setAbilities(resp);
+          setRestPoints(0);
+          setUi("OK");
+        })
+        .catch((err) => {
+          console.log("er", err);
+          setUi("Error");
+        });
+    }
   }, [heroId]);
 
   const onSave = () => {
@@ -84,6 +97,10 @@ const HeroProfilePage = () => {
     if (restPoints > 0) {
       setRestPoints((pre) => pre - 1);
       setAbilities({ ...abilities, [ability]: points + 1 });
+      setHeroPreSave({
+        ...heroesPreSave,
+        [heroId]: { ...abilities, [ability]: points + 1, rest: restPoints },
+      });
     } else {
       message.error("你沒有剩餘點數喔ＱＱ");
     }
@@ -93,6 +110,10 @@ const HeroProfilePage = () => {
     if (points > 0) {
       setRestPoints((pre) => pre + 1);
       setAbilities({ ...abilities, [ability]: points - 1 });
+      setHeroPreSave({
+        ...heroesPreSave,
+        [heroId]: { ...abilities, [ability]: points - 1, rest: restPoints },
+      });
     } else {
       message.error("點數不得為負");
     }

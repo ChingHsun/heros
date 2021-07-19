@@ -17,8 +17,6 @@ const HeroListPage = () => {
   const [ui, setUi] = useState("Loading");
 
   useEffect(() => {
-    console.log("joo");
-
     getHeroList()
       .then((resp) => {
         setUi("OK");
