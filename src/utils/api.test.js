@@ -1,5 +1,6 @@
 import { getHeroList, getHeroProfile, updateHeroProfile } from "./api.js";
 const moxios = require("moxios");
+
 jest.useFakeTimers();
 
 describe("test getHeroList", () => {
