@@ -1,4 +1,4 @@
-import { Button, Row, Space, Statistic } from "antd";
+import { Button } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { memo } from "react";
@@ -44,6 +44,7 @@ const StyledBar = styled.div`
   }
 `;
 
+// eslint-disable-next-line react/display-name
 const AbilityBar = memo(({ ability, points, onPlus, onMinus }) => {
   return (
     <StyledBar>
