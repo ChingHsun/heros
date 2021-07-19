@@ -6,7 +6,6 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
     filename: "index.bundle.js",
-    library: "moxios",
     publicPath: "/",
   },
   mode: process.env.NODE_ENV || "development",
@@ -17,9 +16,6 @@ module.exports = {
     contentBase: "./",
     historyApiFallback: true,
     hot: true,
-  },
-  externals: {
-    axios: "axios",
   },
   module: {
     rules: [
