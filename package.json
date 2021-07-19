@@ -40,7 +40,6 @@
     "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^7.0.1",
     "jest": "^27.0.6",
-    "jest-dom": "^4.0.0",
     "moxios": "^0.4.0",
     "node-sass": "^6.0.1",
     "path": "^0.12.7",
