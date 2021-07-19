@@ -60,7 +60,7 @@ const HeroList = () => {
       );
     default:
       return (
-        <StyledHeroList>
+        <StyledHeroList data-testid="heroList">
           <Col span={24}>
             <Spin />
           </Col>

@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   flex-direction: center;
   margin: 0 auto;
   min-height: 100vh;
-  background-image: url(${marvel});
+  background: url(${marvel});
   background-size: cover;
   background-repeat: no-repeat;
   .inner__container {
