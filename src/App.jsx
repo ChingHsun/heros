@@ -2,10 +2,9 @@ import { useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import HeroContext from "./components/context/HeroContext.jsx";
-// import HeroList from "./components/HeroList.jsx";
-// import HeroProfile from "./components/HeroProfile.jsx";
 import marvel from "./imgs/marvel.jpeg";
 import Loadable from "react-loadable";
+import { Spin } from "antd";
 const StyledContainer = styled.div`
   text-align: center;
   display: flex;
@@ -21,13 +20,16 @@ const StyledContainer = styled.div`
     padding: 100px 30px 30px;
   }
 `;
+const Loading = () => {
+  return <Spin />;
+};
 const HeroList = Loadable({
   loader: () => import("./components/HeroList.jsx"),
-  loading: "loading",
+  loading: Loading,
 });
 const HeroProfile = Loadable({
   loader: () => import("./components/HeroProfile.jsx"),
-  loading: "loading",
+  loading: Loading,
 });
 const App = () => {
   const [currentHeroId, setCurrentHeroId] = useState(null);
