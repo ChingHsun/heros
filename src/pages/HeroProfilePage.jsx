@@ -1,10 +1,9 @@
 import { Button, Col, message, Row, Skeleton } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import AbilityBar from "./AbilityBar.jsx";
+import AbilityBar from "../components/AbilityBar.jsx";
 import { getHeroProfile, updateHeroProfile } from "../utils/api";
-import HeroContext from "./context/HeroContext.jsx";
 
 const StyledSavedArea = styled.div`
   display: flex;
@@ -46,15 +45,13 @@ const StyledError = styled.div`
   text-align: center;
   font-size: 2rem;
 `;
-const HeroProfile = () => {
+const HeroProfilePage = () => {
   const { heroId } = useParams();
   const [abilities, setAbilities] = useState({});
   const [restPoints, setRestPoints] = useState(0);
   const [ui, setUi] = useState("Loading");
-  const { setCurrentHeroId } = useContext(HeroContext);
   useEffect(() => {
     setUi("Loading");
-    setCurrentHeroId(heroId);
     getHeroProfile(heroId)
       .then((resp) => {
         setAbilities(resp);
@@ -158,4 +155,4 @@ const HeroProfile = () => {
   }
 };
 
-export default HeroProfile;
+export default HeroProfilePage;

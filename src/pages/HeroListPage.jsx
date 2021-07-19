@@ -1,9 +1,9 @@
 import { Col, Result, Row, Spin } from "antd";
-import { useContext, useEffect, useState } from "react";
-import HeroCard from "./HeroCard.jsx";
+import { useEffect, useState } from "react";
+import HeroCard from "../components/HeroCard.jsx";
 import { getHeroList } from "../utils/api";
-import HeroContext from "./context/HeroContext.jsx";
 import styled from "styled-components";
+import { useRouteMatch } from "react-router-dom";
 const StyledHeroList = styled(Row)`
   margin-bottom: 10%;
   width: 100%;
@@ -11,11 +11,14 @@ const StyledHeroList = styled(Row)`
   align-items: center;
   margin-left: 0px !important;
 `;
-const HeroList = () => {
+const HeroListPage = () => {
   const [heroList, setHeroList] = useState([]);
+  const routeMatch = useRouteMatch("/heroes/:heroId");
   const [ui, setUi] = useState("Loading");
-  const { currentHeroId } = useContext(HeroContext);
+
   useEffect(() => {
+    console.log("joo");
+
     getHeroList()
       .then((resp) => {
         setUi("OK");
@@ -44,7 +47,9 @@ const HeroList = () => {
                 id={hero.id}
                 name={hero.name}
                 image={hero.image}
-                selected={currentHeroId == hero.id ? "selected" : null}
+                selected={
+                  routeMatch?.params?.heroId == hero.id ? "selected" : null
+                }
               />
             </Col>
           ))}
@@ -59,14 +64,7 @@ const HeroList = () => {
         ></Result>
       );
     default:
-      return (
-        <StyledHeroList data-testid="heroList">
-          <Col span={24}>
-            <Spin />
-          </Col>
-        </StyledHeroList>
-      );
   }
 };
 
-export default HeroList;
+export default HeroListPage;

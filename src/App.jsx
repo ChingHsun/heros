@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import HeroContext from "./components/context/HeroContext.jsx";
 import marvel from "./imgs/marvel.jpeg";
 import Loadable from "react-loadable";
 import { Spin } from "antd";
@@ -23,34 +21,31 @@ const StyledContainer = styled.div`
 const Loading = () => {
   return <Spin />;
 };
-const HeroList = Loadable({
-  loader: () => import("./components/HeroList.jsx"),
+const HeroListPage = Loadable({
+  loader: () => import("./pages/HeroListPage.jsx"),
   loading: Loading,
 });
-const HeroProfile = Loadable({
-  loader: () => import("./components/HeroProfile.jsx"),
+const HeroProfilePage = Loadable({
+  loader: () => import("./pages/HeroProfilePage.jsx"),
   loading: Loading,
 });
 const App = () => {
-  const [currentHeroId, setCurrentHeroId] = useState(null);
   return (
-    <HeroContext.Provider value={{ currentHeroId, setCurrentHeroId }}>
-      <BrowserRouter>
-        <StyledContainer>
-          <div className="inner__container">
-            <HeroList />
-            <Switch>
-              <Route path="/heroes/:heroId">
-                <HeroProfile />
-              </Route>
-              <Route path="*">
-                <Redirect to="/heroes" />
-              </Route>
-            </Switch>
-          </div>
-        </StyledContainer>
-      </BrowserRouter>
-    </HeroContext.Provider>
+    <BrowserRouter>
+      <StyledContainer>
+        <div className="inner__container">
+          <HeroListPage />
+          <Switch>
+            <Route path="/heroes/:heroId">
+              <HeroProfilePage />
+            </Route>
+            <Route path="*">
+              <Redirect to="/heroes" />
+            </Route>
+          </Switch>
+        </div>
+      </StyledContainer>
+    </BrowserRouter>
   );
 };
 export default App;
