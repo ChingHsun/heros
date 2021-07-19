@@ -58,6 +58,7 @@ const HeroProfilePage = () => {
       const { rest, ...ability } = heroesPreSave[heroId];
       setRestPoints(rest);
       setAbilities(ability);
+      setUi("OK");
     } else {
       setUi("Loading");
       getHeroProfile(heroId)
