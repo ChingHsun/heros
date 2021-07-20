@@ -55,6 +55,7 @@ const HeroProfilePage = () => {
 
   useEffect(() => {
     if (heroesPreSave[heroId]) {
+      console.log("heroesPreSave", heroesPreSave);
       const { rest, ...ability } = heroesPreSave[heroId];
       setRestPoints(rest);
       setAbilities(ability);
@@ -100,8 +101,9 @@ const HeroProfilePage = () => {
       setAbilities({ ...abilities, [ability]: points + 1 });
       setHeroPreSave({
         ...heroesPreSave,
-        [heroId]: { ...abilities, [ability]: points + 1, rest: restPoints },
+        [heroId]: { ...abilities, [ability]: points + 1, rest: restPoints - 1 },
       });
+      console.log("her");
     } else {
       message.error("你沒有剩餘點數喔ＱＱ");
     }
@@ -113,7 +115,7 @@ const HeroProfilePage = () => {
       setAbilities({ ...abilities, [ability]: points - 1 });
       setHeroPreSave({
         ...heroesPreSave,
-        [heroId]: { ...abilities, [ability]: points - 1, rest: restPoints },
+        [heroId]: { ...abilities, [ability]: points - 1, rest: restPoints + 1 },
       });
     } else {
       message.error("點數不得為負");

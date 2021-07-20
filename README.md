@@ -91,7 +91,7 @@ yarn start
   個人感覺的缺點則是：
 
   - 樣式調整較不彈性，需要使用 inline style 或 style component 另外控制
-  - Customize Theme: 因為是 webpack 新手，而 customize theme 需要設定 webpack。考量到時間成本，因此忍痛放棄
+  -  主題客製化: 因為是 webpack 新手，而 customize theme 需要設定 webpack。考量到時間成本，因此忍痛放棄
 
 ### React Router Dom
 
