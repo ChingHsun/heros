@@ -8,7 +8,6 @@ Recruiment Project by Hahow ([FrontEnd](https://github.com/hahow/hahow-recruit/b
 
 ```bash
 git clone https://github.com/ChingHsun/hahow.git
-cd hahow-recruit
 yarn
 yarn start
 ```
